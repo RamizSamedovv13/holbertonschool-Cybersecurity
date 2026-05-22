@@ -1,14 +1,3 @@
 #!/bin/bash
-
-cidr=$1
-
-mask=$(printf '%*s' "$cidr" '' | tr ' ' '1')
-mask=$mask$(printf '%*s' $((32-cidr)) '' | tr ' ' '0')
-
-for i in {0..3}; do
-    part=${mask:$((i*8)):8}
-    echo -n "$((2#$part))"
-    [ $i -lt 3 ] && echo -n "."
-done
-
-echo
+mask=$(printf '%*s' "$1" '' | tr ' ' '1')$(printf '%*s' $((32-$1)) '' | tr ' ' '0')
+echo $((2#${mask:0:8})).$((2#${mask:8:8})).$((2#${mask:16:8})).$((2#${mask:24:8}))
